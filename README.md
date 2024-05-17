@@ -1,4 +1,4 @@
-# topup_app
+# top_up_app
 
 A new Flutter project.
 
