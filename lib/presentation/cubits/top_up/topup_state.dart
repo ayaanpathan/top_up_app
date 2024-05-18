@@ -26,3 +26,12 @@ class TopupFailure extends TopupState {
   @override
   List<Object> get props => [error];
 }
+
+class TopupFailureMonthlyLimit extends TopupState {
+  final String error;
+
+  const TopupFailureMonthlyLimit(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

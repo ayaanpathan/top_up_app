@@ -9,7 +9,6 @@ class MockData {
     balance: 5000.0,
     userName: 'user1',
     password: '12345678',
-    beneficiaries: [],
   );
 
   static User user2 = User(
@@ -19,7 +18,6 @@ class MockData {
     balance: 5000.0,
     userName: 'user2',
     password: '12345678',
-    beneficiaries: [],
   );
 
   static List<Beneficiary> beneficiaries = [];

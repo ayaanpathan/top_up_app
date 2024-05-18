@@ -40,6 +40,7 @@ class BeneficiaryCubit extends Cubit<BeneficiaryState> {
   }
 
   void clearBeneficiaries() async {
+    MockData.beneficiaries = [];
     emit(const BeneficiaryLoaded([], 0));
   }
 }

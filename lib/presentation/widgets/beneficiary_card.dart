@@ -14,33 +14,47 @@ class BeneficiaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.4,
-      height: 180,
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         shadowColor: Colors.black,
+        color: Colors.grey[850],
         elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 16,
+            const SizedBox(height: 16),
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: Theme.of(context).primaryColor,
+              child: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 beneficiary.nickname,
                 style: const TextStyle(
-                  color: Colors.blueAccent,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
             Text(
               beneficiary.phoneNumber,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[400],
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -57,11 +71,19 @@ class BeneficiaryCard extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[300],
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  backgroundColor: Theme.of(context).primaryColor,
                 ),
                 child: const Text(
                   'Recharge Now',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),

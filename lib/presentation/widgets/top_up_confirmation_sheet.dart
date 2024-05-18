@@ -1,31 +1,36 @@
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_up_app/domain/entities/beneficiary.dart';
 import 'package:top_up_app/domain/entities/topup_option.dart';
 import 'package:top_up_app/domain/entities/user.dart';
-import 'package:top_up_app/presentation/cubits/topup_cubit.dart';
-import 'package:top_up_app/presentation/cubits/user_cubit.dart';
+import 'package:top_up_app/presentation/cubits/top_up/topup_cubit.dart';
+import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 
 class TopupConfirmationSheet extends StatelessWidget {
   final TopupOption option;
+  final Beneficiary beneficiary;
 
   const TopupConfirmationSheet({
     super.key,
     required this.option,
+    required this.beneficiary,
   });
 
   @override
   Widget build(BuildContext context) {
     final User user = context.read<UserCubit>().user;
+    final ThemeData theme = Theme.of(context); // Access theme data
     const double serviceFee = 1.0;
     final double totalAmount = option.amount + serviceFee;
     final double remainingBalance = user.balance - totalAmount;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(
+      decoration: BoxDecoration(
+        color: theme
+            .scaffoldBackgroundColor, // Use scaffold background color from theme
+        borderRadius: const BorderRadius.vertical(
           top: Radius.circular(20),
         ),
       ),
@@ -38,48 +43,69 @@ class TopupConfirmationSheet extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Roboto',
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
-          _buildInfoRow('Top Up Amount:', 'AED ${option.amount}'),
+          _buildInfoRow(
+            'Top Up Amount:',
+            'AED ${option.amount}',
+          ),
           const SizedBox(height: 8),
-          _buildInfoRow('Service Fee:', 'AED $serviceFee'),
+          _buildInfoRow(
+            'Service Fee:',
+            'AED $serviceFee',
+          ),
           const Divider(height: 24, thickness: 1),
-          _buildInfoRow('Total Deduction:', 'AED $totalAmount'),
+          _buildInfoRow(
+            'Total Deduction:',
+            'AED $totalAmount',
+          ),
           const SizedBox(height: 16),
-          _buildInfoRow('Remaining Balance:', 'AED $remainingBalance'),
+          _buildInfoRow(
+            'Remaining Balance:',
+            'AED $remainingBalance',
+          ),
           const SizedBox(height: 24),
-          ActionSlider.standard(
-            action: (controller) async {
-              controller.loading();
-              await Future.delayed(const Duration(seconds: 2));
-              if (!context.mounted) return;
-              Navigator.of(context).pop(true);
-              await context.read<TopupCubit>().topUp(option, user, context);
-              controller.success();
-            },
-            backgroundColor: Colors.white,
-            sliderBehavior: SliderBehavior.stretch,
-            loadingIcon: const CircularProgressIndicator(
-              color: Colors.white,
-            ),
-            toggleColor: Colors.red,
-            icon: const Icon(
-              Icons.chevron_right,
-              color: Colors.white,
-            ),
-            successIcon: const Icon(
-              Icons.check_circle_outline,
-              color: Colors.white,
-            ),
-            child: const Text(
-              'Slide to confirm',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
+          _buildSlider(
+            context,
+            user,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSlider(BuildContext context, User user) {
+    return ActionSlider.standard(
+      action: (controller) async {
+        controller.loading();
+        await Future.delayed(const Duration(seconds: 2));
+        if (!context.mounted) return;
+        Navigator.of(context).pop(true);
+        controller.success();
+        await context
+            .read<TopupCubit>()
+            .topUp(option, beneficiary, user, context);
+      },
+      backgroundColor:
+          Theme.of(context).cardColor, // Use card color from theme
+      sliderBehavior: SliderBehavior.stretch,
+      loadingIcon: const CircularProgressIndicator(
+        color: Colors.white,
+      ),
+      toggleColor: Theme.of(context).primaryColor,
+      icon: const Icon(
+        Icons.chevron_right,
+        color: Colors.white,
+      ),
+      successIcon: const Icon(
+        Icons.check_circle_outline,
+        color: Colors.white,
+      ),
+      child: const Text(
+        'Slide to confirm',
+        style: TextStyle(color: Colors.white, fontSize: 18),
       ),
     );
   }

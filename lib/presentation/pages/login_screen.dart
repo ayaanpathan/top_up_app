@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_up_app/domain/mock/mock_data.dart';
-import 'package:top_up_app/presentation/cubits/beneficiary_cubit.dart';
-import 'package:top_up_app/presentation/cubits/user_cubit.dart';
+import 'package:top_up_app/presentation/cubits/beneficiary/beneficiary_cubit.dart';
+import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 import 'package:top_up_app/presentation/pages/beneficiary_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,10 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.red,
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        title: const Text('Login'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -45,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.red,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(color: Colors.red),
+                      borderSide: BorderSide(color: theme.primaryColor),
                     ),
                   ),
                   validator: (value) {
@@ -79,16 +80,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(color: Colors.red),
+                      borderSide: BorderSide(color: theme.primaryColor),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(_hidePassword
                           ? Icons.visibility_off
                           : Icons.visibility),
                       onPressed: () {
-                        setState(
-                          () => _hidePassword = !_hidePassword,
-                        );
+                        setState(() => _hidePassword = !_hidePassword);
                       },
                     ),
                   ),
@@ -107,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red, // Red button for branding
+                    backgroundColor: theme.primaryColor, // Use theme color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -129,9 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_usernameController.text.trim() == 'user1' ||
         _usernameController.text.trim() == 'user2' &&
             _passwordController.text.trim() == MockData.user1.password) {
-      _usernameController.clear();
-      _passwordController.clear();
-
       context.read<BeneficiaryCubit>().clearBeneficiaries();
       context.read<UserCubit>().setUserData(
             _usernameController.text.trim() == 'user1'
@@ -141,13 +137,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => BeneficiaryScreen(
-            user: _usernameController.text.trim() == 'user1'
-                ? MockData.user1
-                : MockData.user2,
-          ),
+          builder: (context) => const BeneficiaryScreen(),
         ),
       );
+      _usernameController.clear();
+      _passwordController.clear();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Invalid Credentials!!')),
