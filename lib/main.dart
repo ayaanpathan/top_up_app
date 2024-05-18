@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_up_app/domain/usecases/add_beneficiary.dart';
 import 'package:top_up_app/domain/usecases/get_beneficiaries.dart';
 import 'package:top_up_app/domain/usecases/remove_beneficiary.dart';
-import 'package:top_up_app/presentation/cubits/topup_cubit.dart';
-import 'package:top_up_app/presentation/cubits/user_cubit.dart';
+import 'package:top_up_app/presentation/cubits/top_up/topup_cubit.dart';
+import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 import 'package:top_up_app/presentation/pages/login_screen.dart';
+import 'package:top_up_app/presentation/theme/theme_provider.dart';
 
 import 'data/repositories/beneficiary_repository_impl.dart';
-import 'presentation/cubits/beneficiary_cubit.dart';
+import 'presentation/cubits/beneficiary/beneficiary_cubit.dart';
 
 void main() {
   final beneficiaryRepository = BeneficiaryRepositoryImpl();
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Top Up App',
-        theme: ThemeData(primarySwatch: Colors.red),
+        theme: ThemeProvider.darkTheme,
         home: const LoginScreen(),
       ),
     );
