@@ -32,12 +32,12 @@ class TopupCubit extends Cubit<TopupState> {
       emit(TopupLoading());
 
       try {
-        await httpService.topUp(option.amount, beneficiary.id);
-
         beneficiary.remainingBalance += option.amount;
         beneficiary.topupAmount += option.amount;
         beneficiary.topupDate = DateTime.now();
         user.balance -= option.amount + serviceCharge;
+
+        await httpService.topUp(option.amount, beneficiary.id);
         if (!context.mounted) return;
         context.read<UserCubit>().emit(UserBalanceUpdate(user));
         emit(TopupSuccess(user.balance));
