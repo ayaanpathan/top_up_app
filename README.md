@@ -38,11 +38,11 @@ To run the Top Up App on your local machine, follow these steps:
 # User Credentials
 ## Verified User:
 
-Username: user1
+Username: user1<br>
 Password: 12345678
 
 
 ## Unverified User:
 
-Username: user2
+Username: user2<br>
 Password: 12345678
