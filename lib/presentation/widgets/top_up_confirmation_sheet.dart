@@ -7,10 +7,15 @@ import 'package:top_up_app/domain/entities/user.dart';
 import 'package:top_up_app/presentation/cubits/top_up/topup_cubit.dart';
 import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 
+/// A bottom sheet widget for confirming a top-up transaction.
 class TopupConfirmationSheet extends StatelessWidget {
+  /// The top-up option selected.
   final TopupOption option;
+
+  /// The beneficiary to top up.
   final Beneficiary beneficiary;
 
+  /// Constructs a [TopupConfirmationSheet] with the specified [option] and [beneficiary].
   const TopupConfirmationSheet({
     super.key,
     required this.option,
@@ -20,7 +25,7 @@ class TopupConfirmationSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User user = context.read<UserCubit>().user;
-    final ThemeData theme = Theme.of(context); // Access theme data
+    final ThemeData theme = Theme.of(context);
     const double serviceFee = 1.0;
     final double totalAmount = option.amount + serviceFee;
     final double remainingBalance = user.balance - totalAmount;
@@ -28,8 +33,7 @@ class TopupConfirmationSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: theme
-            .scaffoldBackgroundColor, // Use scaffold background color from theme
+        color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -76,20 +80,21 @@ class TopupConfirmationSheet extends StatelessWidget {
     );
   }
 
+  /// Builds the action slider widget for confirming the top-up transaction.
   Widget _buildSlider(BuildContext context, User user) {
     return ActionSlider.standard(
       action: (controller) async {
         controller.loading();
         await Future.delayed(const Duration(seconds: 2));
-        if (!context.mounted) return;
-        Navigator.of(context).pop(true);
         controller.success();
+        if (!context.mounted) return;
         await context
             .read<TopupCubit>()
             .topUp(option, beneficiary, user, context);
+        if (!context.mounted) return;
+        Navigator.of(context).pop();
       },
-      backgroundColor:
-          Theme.of(context).cardColor, // Use card color from theme
+      backgroundColor: Theme.of(context).cardColor,
       sliderBehavior: SliderBehavior.stretch,
       loadingIcon: const CircularProgressIndicator(
         color: Colors.white,
@@ -110,6 +115,7 @@ class TopupConfirmationSheet extends StatelessWidget {
     );
   }
 
+  /// Builds a row widget with label and value.
   Widget _buildInfoRow(String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

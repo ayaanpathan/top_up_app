@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
+/// A widget that displays an alert dialog with a title and content.
 class AlertDialogWidget extends StatelessWidget {
+  /// Constructs an [AlertDialogWidget] with the given [title] and [content].
   const AlertDialogWidget({
     super.key,
     required this.title,
     required this.content,
   });
 
+  /// The title of the alert dialog.
   final String title;
+
+  /// The content text of the alert dialog.
   final String content;
 
   @override

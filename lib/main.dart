@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_up_app/data/services/mock_http_service.dart';
 import 'package:top_up_app/domain/usecases/add_beneficiary.dart';
 import 'package:top_up_app/domain/usecases/get_beneficiaries.dart';
 import 'package:top_up_app/domain/usecases/remove_beneficiary.dart';
@@ -21,12 +22,22 @@ void main() {
   ));
 }
 
+/// The main application widget.
 class MyApp extends StatelessWidget {
+  /// Use case for getting beneficiaries.
   final GetBeneficiaries getBeneficiaries;
+
+  /// Use case for adding beneficiary.
   final AddBeneficiary addBeneficiary;
+
+  /// Use case for removing beneficiary.
   final RemoveBeneficiary removeBeneficiary;
 
-  const MyApp({
+  /// Mock HTTP service for testing.
+  final mockHttpService = MockHttpService();
+
+  /// Constructs the [MyApp] widget with required dependencies.
+  MyApp({
     super.key,
     required this.getBeneficiaries,
     required this.addBeneficiary,
@@ -38,13 +49,15 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (_) => BeneficiaryCubit(
-                  getBeneficiaries: getBeneficiaries,
-                  addBeneficiary: addBeneficiary,
-                  removeBeneficiary: removeBeneficiary,
-                )),
+          create: (_) => BeneficiaryCubit(
+            getBeneficiaries: getBeneficiaries,
+            addBeneficiary: addBeneficiary,
+            removeBeneficiary: removeBeneficiary,
+            httpService: mockHttpService,
+          ),
+        ),
         BlocProvider(
-          create: (_) => TopupCubit(),
+          create: (_) => TopupCubit(httpService: mockHttpService),
         ),
         BlocProvider(
           create: (_) => UserCubit(),
