@@ -18,7 +18,7 @@ To run the Top Up App on your local machine, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/ayaanpathan/top_up_app.git
 
 2. Navigate to the project directory:
 
