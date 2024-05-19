@@ -1,4 +1,3 @@
-/// Cubit responsible for managing the state related to beneficiary top-up operations.
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,7 +69,6 @@ class TopupCubit extends Cubit<TopupState> {
     });
 
     if (totalTopUpThisMonth + amount > 3000) {
-      print(totalTopUpThisMonth);
       emit(const TopupFailureMonthlyLimit(
           'You have reached your total monthly top-up limit of AED 3000.'));
       return false; // Exceeds total top-up limit for all beneficiaries
@@ -80,13 +78,11 @@ class TopupCubit extends Cubit<TopupState> {
     if (beneficiary.topupDate.month == currentMonth &&
         beneficiary.topupDate.year == currentYear) {
       if (user.isVerified && beneficiary.topupAmount + amount > 1000) {
-        print('here1');
         emit(const TopupFailure(
             'Uh oh! Not enough monthly limit available to Top-up.'));
         return false; // Exceeds individual beneficiary limit for verified users
       }
       if (!user.isVerified && beneficiary.topupAmount + amount > 500) {
-        print('here2');
         emit(const TopupFailure(
             'Uh oh! Not enough monthly limit available to Top-up. To increase your limit, please verify your account'));
         return false; // Exceeds individual beneficiary limit for non-verified users
