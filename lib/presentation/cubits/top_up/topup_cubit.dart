@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_up_app/data/services/mock_http_service.dart';
 import 'package:top_up_app/domain/entities/beneficiary.dart';
 import 'package:top_up_app/domain/entities/topup_option.dart';
 import 'package:top_up_app/domain/entities/user.dart';
@@ -10,19 +11,30 @@ import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 part 'topup_state.dart';
 
 class TopupCubit extends Cubit<TopupState> {
-  TopupCubit() : super(TopupInitial());
+  final MockHttpService httpService;
+
+  TopupCubit({required this.httpService}) : super(TopupInitial());
 
   final int serviceCharge = 1;
 
   Future<void> topUp(TopupOption option, Beneficiary beneficiary, User user,
       BuildContext context) async {
     if (canTopUp(user, beneficiary, option.amount)) {
-      beneficiary.remainingBalance += option.amount;
-      beneficiary.topupAmount += option.amount;
-      beneficiary.topupDate = DateTime.now();
-      user.balance -= option.amount + serviceCharge;
-      context.read<UserCubit>().setUserData(user);
-      emit(TopupSuccess(user.balance));
+      emit(TopupLoading());
+
+      try {
+        await httpService.topUp(option.amount, beneficiary.id);
+
+        beneficiary.remainingBalance += option.amount;
+        beneficiary.topupAmount += option.amount;
+        beneficiary.topupDate = DateTime.now();
+        user.balance -= option.amount + serviceCharge;
+        if(!context.mounted) return;
+        context.read<UserCubit>().emit(UserBalanceUpdate(user));
+        emit(TopupSuccess(user.balance));
+      } catch (e) {
+        emit(TopupFailure(e.toString()));
+      }
     }
   }
 

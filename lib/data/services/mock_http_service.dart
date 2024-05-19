@@ -29,7 +29,8 @@ class MockHttpService {
 
   ///Add Beneficiary
   Future<bool> addBeneficiary(Beneficiary beneficiary) async {
-    await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
+    /// Simulate network delay.
+    await Future.delayed(const Duration(seconds: 2));
 
     // Check if the beneficiary already exists
     final exists = MockData.beneficiaries.any(
@@ -42,5 +43,19 @@ class MockHttpService {
 
     MockData.beneficiaries.add(beneficiary);
     return true;
+  }
+
+  /// Topup Beneficiary
+  Future<void> topUp(int amount, String beneficiaryId) async {
+    ///. Simulate network delay
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Simulate success or failure based on the beneficiary ID
+    if (beneficiaryId.isEmpty) {
+      throw Exception('Failed to top up');
+    }
+
+    // Otherwise, simulate a successful top-up
+    return;
   }
 }

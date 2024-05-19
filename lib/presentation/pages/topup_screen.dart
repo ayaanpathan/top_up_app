@@ -24,7 +24,6 @@ class TopupScreen extends StatefulWidget {
 }
 
 class _TopupScreenState extends State<TopupScreen> {
-
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -53,9 +52,13 @@ class _TopupScreenState extends State<TopupScreen> {
                 children: [
                   const BalanceCard(),
                   const SizedBox(height: 20),
-                  LimitCard(title: 'Available Beneficiary Limit:', availableLimit: availableLimit),
+                  LimitCard(
+                      title: 'Available Beneficiary Limit:',
+                      availableLimit: availableLimit),
                   const SizedBox(height: 20),
-                  LimitCard(title: 'Available Monthly Limit:' ,availableLimit: state.user.getAvailableMonthlyLimit()),
+                  LimitCard(
+                      title: 'Available Monthly Limit:',
+                      availableLimit: state.user.getAvailableMonthlyLimit()),
                   const SizedBox(height: 20),
                   const Text(
                     'Select Top Up Amount',
@@ -73,7 +76,8 @@ class _TopupScreenState extends State<TopupScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialogWidget(
-                                title: 'Error!', content: state.error,
+                              title: 'Error!',
+                              content: state.error,
                             );
                           },
                         );
@@ -83,7 +87,8 @@ class _TopupScreenState extends State<TopupScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialogWidget(
-                                title: 'Error!', content: state.error,
+                              title: 'Error!',
+                              content: state.error,
                             );
                           },
                         );
@@ -122,10 +127,45 @@ class _TopupScreenState extends State<TopupScreen> {
                                 color: Theme.of(context).hintColor,
                               ),
                               onTap: () {
-                                if (availableLimit > 0) {
+                                if (availableLimit == 0) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AlertDialogWidget(
+                                        title: 'Error!',
+                                        content:
+                                            'You have reached the monthly top-up limit for this beneficiary.',
+                                      );
+                                    },
+                                  );
+                                } else if (option.amount >
+                                    state.user.getAvailableMonthlyLimit()) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AlertDialogWidget(
+                                        title: 'Error!',
+                                        content:
+                                            'Topup option is more than the available monthly limit',
+                                      );
+                                    },
+                                  );
+                                } else if (option.amount > availableLimit) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AlertDialogWidget(
+                                        title: 'Error!',
+                                        content:
+                                            'Topup option is more than the available beneficiary limit',
+                                      );
+                                    },
+                                  );
+                                } else {
                                   showModalBottomSheet(
                                     context: context,
                                     isScrollControlled: true,
+                                    isDismissible: state is !TopupLoading,
                                     backgroundColor:
                                         theme.scaffoldBackgroundColor,
                                     shape: const RoundedRectangleBorder(
@@ -144,17 +184,6 @@ class _TopupScreenState extends State<TopupScreen> {
                                         beneficiary: widget.beneficiary,
                                       ),
                                     ),
-                                  );
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const AlertDialogWidget(
-                                        title: 'Error!',
-                                        content:
-                                            'You have reached the monthly top-up limit for this beneficiary.',
-                                      );
-                                    },
                                   );
                                 }
                               },

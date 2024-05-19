@@ -81,15 +81,15 @@ class TopupConfirmationSheet extends StatelessWidget {
       action: (controller) async {
         controller.loading();
         await Future.delayed(const Duration(seconds: 2));
-        if (!context.mounted) return;
-        Navigator.of(context).pop(true);
         controller.success();
+        if (!context.mounted) return;
         await context
             .read<TopupCubit>()
             .topUp(option, beneficiary, user, context);
+        if (!context.mounted) return;
+        Navigator.of(context).pop();
       },
-      backgroundColor:
-          Theme.of(context).cardColor, // Use card color from theme
+      backgroundColor: Theme.of(context).cardColor, // Use card color from theme
       sliderBehavior: SliderBehavior.stretch,
       loadingIcon: const CircularProgressIndicator(
         color: Colors.white,

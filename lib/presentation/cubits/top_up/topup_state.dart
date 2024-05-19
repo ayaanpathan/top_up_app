@@ -9,6 +9,9 @@ abstract class TopupState extends Equatable {
 
 class TopupInitial extends TopupState {}
 
+
+class TopupLoading extends TopupState {}
+
 class TopupSuccess extends TopupState {
   final double remainingBalance;
 

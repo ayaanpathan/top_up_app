@@ -11,5 +11,6 @@ class TopupOption {
     TopupOption(amount: 50),
     TopupOption(amount: 75),
     TopupOption(amount: 100),
+    TopupOption(amount: 1000),
   ];
 }

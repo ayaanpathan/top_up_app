@@ -27,7 +27,9 @@ class MyApp extends StatelessWidget {
   final AddBeneficiary addBeneficiary;
   final RemoveBeneficiary removeBeneficiary;
 
-  const MyApp({
+  final mockHttpService = MockHttpService();
+
+  MyApp({
     super.key,
     required this.getBeneficiaries,
     required this.addBeneficiary,
@@ -43,10 +45,10 @@ class MyApp extends StatelessWidget {
                   getBeneficiaries: getBeneficiaries,
                   addBeneficiary: addBeneficiary,
                   removeBeneficiary: removeBeneficiary,
-                  httpService: MockHttpService(),
+                  httpService: mockHttpService,
                 )),
         BlocProvider(
-          create: (_) => TopupCubit(),
+          create: (_) => TopupCubit(httpService: mockHttpService),
         ),
         BlocProvider(
           create: (_) => UserCubit(),
