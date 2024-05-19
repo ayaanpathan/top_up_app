@@ -24,4 +24,8 @@ class BeneficiaryLoaded extends BeneficiaryState {
   List<Object> get props => [beneficiaries];
 }
 
-class BeneficiaryError extends BeneficiaryState {}
+class BeneficiaryError extends BeneficiaryState {
+  final String message;
+
+  const BeneficiaryError({required this.message});
+}

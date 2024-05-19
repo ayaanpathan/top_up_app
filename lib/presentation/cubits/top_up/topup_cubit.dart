@@ -21,7 +21,8 @@ class TopupCubit extends Cubit<TopupState> {
       beneficiary.topupAmount += option.amount;
       beneficiary.topupDate = DateTime.now();
       user.balance -= option.amount + serviceCharge;
-      context.read<UserCubit>().emit(UserLoaded(user));
+      context.read<UserCubit>().setUserData(user);
+      emit(TopupSuccess(user.balance));
     }
   }
 

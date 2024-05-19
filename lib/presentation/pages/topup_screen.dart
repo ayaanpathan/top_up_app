@@ -42,7 +42,7 @@ class _TopupScreenState extends State<TopupScreen> {
       backgroundColor: theme.primaryColorDark,
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          if (state is UserLoaded) {
+          if (state is UserBalanceUpdate) {
             final availableLimit =
                 state.user.getAvailableBeneficiaryLimit(widget.beneficiary);
 

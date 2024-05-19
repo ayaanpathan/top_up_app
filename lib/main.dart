@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_up_app/data/services/mock_http_service.dart';
 import 'package:top_up_app/domain/usecases/add_beneficiary.dart';
 import 'package:top_up_app/domain/usecases/get_beneficiaries.dart';
 import 'package:top_up_app/domain/usecases/remove_beneficiary.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
                   getBeneficiaries: getBeneficiaries,
                   addBeneficiary: addBeneficiary,
                   removeBeneficiary: removeBeneficiary,
+                  httpService: MockHttpService(),
                 )),
         BlocProvider(
           create: (_) => TopupCubit(),

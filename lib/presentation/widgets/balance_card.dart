@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_up_app/presentation/cubits/top_up/topup_cubit.dart';
 import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 
 class BalanceCard extends StatelessWidget {
@@ -9,7 +10,7 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        if (state is UserLoaded) {
+        if (state is UserBalanceUpdate) {
           return Card(
             color: Theme.of(context).cardColor,
             elevation: 4,
