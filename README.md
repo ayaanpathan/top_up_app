@@ -1,16 +1,48 @@
-# top_up_app
+# Top Up App
 
-A new Flutter project.
+## Overview
 
-## Getting Started
+The Top Up App is a mobile application designed to facilitate the process of topping up mobile phone credits for beneficiaries. It provides a user-friendly interface for users to manage their beneficiaries, view their available balance, and initiate top-up transactions.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **User Authentication**: Users can log in using their credentials.
+- **Beneficiary Management**: Users can add and view their beneficiaries.
+- **Top-Up Transactions**: Users can initiate top-up transactions for their beneficiaries.
+- **Real-Time Balance Updates**: The app provides real-time updates on the user's available balance.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To run the Top Up App on your local machine, follow these steps:
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone <repository_url>
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd top_up_app
+
+3. Install dependencies:
+
+   ```bash
+   flutter pub get
+
+4. Run the app:
+
+   ```bash
+   flutter run
+
+# User Credentials
+## Verified User:
+
+Username: user1
+Password: 12345678
+
+
+## Unverified User:
+
+Username: user2
+Password: 12345678
