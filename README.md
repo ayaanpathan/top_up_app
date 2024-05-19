@@ -38,11 +38,15 @@ To run the Top Up App on your local machine, follow these steps:
 # User Credentials
 ## Verified User:
 
+Monthly limit per beneficiary: 1000<br>
+
 Username: user1<br>
 Password: 12345678
 
 
 ## Unverified User:
+
+Monthly limit per beneficiary: 500<br>
 
 Username: user2<br>
 Password: 12345678
