@@ -29,7 +29,7 @@ class _AddBeneficiaryBottomSheetState extends State<AddBeneficiaryBottomSheet> {
             builder: (BuildContext context) {
               return AlertDialogWidget(
                 title: 'Error!',
-                content: state.message ?? 'An error occurred',
+                content: state.message,
               );
             },
           );

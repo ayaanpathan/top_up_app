@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:top_up_app/presentation/cubits/top_up/topup_cubit.dart';
 import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 
 class BalanceCard extends StatelessWidget {
