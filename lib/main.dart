@@ -22,13 +22,21 @@ void main() {
   ));
 }
 
+/// The main application widget.
 class MyApp extends StatelessWidget {
+  /// Use case for getting beneficiaries.
   final GetBeneficiaries getBeneficiaries;
+
+  /// Use case for adding beneficiary.
   final AddBeneficiary addBeneficiary;
+
+  /// Use case for removing beneficiary.
   final RemoveBeneficiary removeBeneficiary;
 
+  /// Mock HTTP service for testing.
   final mockHttpService = MockHttpService();
 
+  /// Constructs the [MyApp] widget with required dependencies.
   MyApp({
     super.key,
     required this.getBeneficiaries,
@@ -41,12 +49,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (_) => BeneficiaryCubit(
-                  getBeneficiaries: getBeneficiaries,
-                  addBeneficiary: addBeneficiary,
-                  removeBeneficiary: removeBeneficiary,
-                  httpService: mockHttpService,
-                )),
+          create: (_) => BeneficiaryCubit(
+            getBeneficiaries: getBeneficiaries,
+            addBeneficiary: addBeneficiary,
+            removeBeneficiary: removeBeneficiary,
+            httpService: mockHttpService,
+          ),
+        ),
         BlocProvider(
           create: (_) => TopupCubit(httpService: mockHttpService),
         ),

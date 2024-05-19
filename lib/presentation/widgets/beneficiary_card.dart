@@ -3,12 +3,20 @@ import 'package:top_up_app/domain/entities/beneficiary.dart';
 import 'package:top_up_app/domain/entities/user.dart';
 import 'package:top_up_app/presentation/pages/topup_screen.dart';
 
+/// A widget that displays beneficiary information and allows recharging.
 class BeneficiaryCard extends StatelessWidget {
+  /// The beneficiary for which the card is displayed.
   final Beneficiary beneficiary;
+
+  /// The current user.
   final User user;
 
-  const BeneficiaryCard(
-      {super.key, required this.beneficiary, required this.user});
+  /// Constructs a [BeneficiaryCard] with the specified [beneficiary] and [user].
+  const BeneficiaryCard({
+    super.key,
+    required this.beneficiary,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +79,7 @@ class BeneficiaryCard extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

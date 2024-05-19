@@ -4,11 +4,15 @@ import 'package:top_up_app/data/services/mock_http_service.dart';
 
 part 'user_state.dart';
 
+/// Cubit for managing user-related state and operations.
 class UserCubit extends Cubit<UserState> {
+  /// Constructor for `UserCubit`.
   UserCubit() : super(UserInitial());
 
+  /// Instance of the currently logged-in user.
   late User user;
 
+  /// Initiates the login process with the provided username and password.
   Future<void> login(String username, String password) async {
     emit(UserLoading());
 
@@ -31,8 +35,10 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  /// Sets the user data to the provided user object.
   void setUserData(User userData) {
     user = userData;
     emit(UserBalanceUpdate(user));
   }
 }
+

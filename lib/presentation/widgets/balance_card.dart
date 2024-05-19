@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 
+/// A widget that displays the user's available balance.
 class BalanceCard extends StatelessWidget {
+  /// Constructs a [BalanceCard].
   const BalanceCard({super.key});
 
   @override

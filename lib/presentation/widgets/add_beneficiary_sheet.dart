@@ -6,6 +6,7 @@ import 'package:top_up_app/presentation/cubits/beneficiary/beneficiary_cubit.dar
 import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 import 'package:top_up_app/presentation/widgets/alert_dialog.dart';
 
+/// A bottom sheet widget used for adding a new beneficiary.
 class AddBeneficiaryBottomSheet extends StatefulWidget {
   const AddBeneficiaryBottomSheet({super.key});
 
@@ -108,6 +109,7 @@ class _AddBeneficiaryBottomSheetState extends State<AddBeneficiaryBottomSheet> {
                     controller: phoneNumberController,
                     decoration: InputDecoration(
                       labelText: 'Phone Number',
+                      hintText: '05...',
                       labelStyle: const TextStyle(color: Colors.white70),
                       prefixIcon: const Icon(Icons.phone_outlined,
                           color: Colors.white70),
@@ -178,6 +180,7 @@ class _AddBeneficiaryBottomSheetState extends State<AddBeneficiaryBottomSheet> {
     );
   }
 
+  /// Saves the beneficiary if the form is valid.
   void _saveBeneficiary() {
     if (_formKey.currentState!.validate()) {
       final newBeneficiary = Beneficiary(

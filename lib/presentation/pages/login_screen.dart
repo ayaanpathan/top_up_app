@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_up_app/presentation/cubits/beneficiary/beneficiary_cubit.dart';
 import 'package:top_up_app/presentation/cubits/user/user_cubit.dart';
 import 'package:top_up_app/presentation/pages/beneficiary_screen.dart';
+import 'package:top_up_app/presentation/widgets/alert_dialog.dart';
 
+/// The login screen allows users to log in to the application.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -24,12 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  /// Validates the login credentials and initiates the login process.
   void _validateLogin() {
     if (_formKey.currentState!.validate()) {
       context.read<UserCubit>().login(
-            _usernameController.text.trim(),
-            _passwordController.text.trim(),
-          );
+        _usernameController.text.trim(),
+        _passwordController.text.trim(),
+      );
     }
   }
 
@@ -55,8 +58,14 @@ class _LoginScreenState extends State<LoginScreen> {
             _usernameController.clear();
             _passwordController.clear();
           } else if (state is UserError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialogWidget(
+                  title: 'Error!',
+                  content: state.message,
+                );
+              },
             );
           }
         },

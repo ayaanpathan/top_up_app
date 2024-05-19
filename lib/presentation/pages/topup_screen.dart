@@ -9,20 +9,26 @@ import 'package:top_up_app/presentation/widgets/alert_dialog.dart';
 import 'package:top_up_app/presentation/widgets/balance_card.dart';
 import 'package:top_up_app/presentation/widgets/top_up_confirmation_sheet.dart';
 
+/// Represents the Topup Screen widget which allows users to top up their beneficiaries.
 class TopupScreen extends StatefulWidget {
-  final Beneficiary beneficiary;
-  final User user;
-
+  /// Constructs a [TopupScreen] with the specified beneficiary and user.
   const TopupScreen({
-    Key? key,
+    super.key,
     required this.beneficiary,
     required this.user,
-  }) : super(key: key);
+  });
+
+  /// The beneficiary for whom the top-up is being performed.
+  final Beneficiary beneficiary;
+
+  /// The current user performing the top-up.
+  final User user;
 
   @override
   State<TopupScreen> createState() => _TopupScreenState();
 }
 
+/// Represents the state of the Topup Screen widget.
 class _TopupScreenState extends State<TopupScreen> {
   @override
   Widget build(BuildContext context) {
@@ -165,7 +171,6 @@ class _TopupScreenState extends State<TopupScreen> {
                                   showModalBottomSheet(
                                     context: context,
                                     isScrollControlled: true,
-                                    isDismissible: state is !TopupLoading,
                                     backgroundColor:
                                         theme.scaffoldBackgroundColor,
                                     shape: const RoundedRectangleBorder(
@@ -208,10 +213,15 @@ class _TopupScreenState extends State<TopupScreen> {
   }
 }
 
+/// Represents a card widget displaying the available limit.
 class LimitCard extends StatelessWidget {
-  final double availableLimit;
+  /// The title of the card.
   final String title;
 
+  /// The available limit value.
+  final double availableLimit;
+
+  /// Constructs a [LimitCard] with the specified title and available limit.
   const LimitCard({
     super.key,
     required this.title,

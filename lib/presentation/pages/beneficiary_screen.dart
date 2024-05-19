@@ -7,14 +7,18 @@ import 'package:top_up_app/presentation/widgets/balance_card.dart';
 import 'package:top_up_app/presentation/widgets/beneficiary_card.dart';
 import 'login_screen.dart';
 
+/// Represents the Beneficiary Screen widget which allows users to manage their beneficiaries.
 class BeneficiaryScreen extends StatefulWidget {
+  /// Constructs a [BeneficiaryScreen].
   const BeneficiaryScreen({super.key});
 
   @override
   State<BeneficiaryScreen> createState() => _BeneficiaryScreenState();
 }
 
+/// Represents the state of the Beneficiary Screen widget.
 class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
+  /// Determines whether to show the balance or not.
   bool _showBalance = false;
 
   @override
@@ -35,13 +39,14 @@ class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
         actions: [
           const Text('Show Balance ', style: TextStyle(color: Colors.white)),
           Switch(
-              value: _showBalance,
-              onChanged: (val) {
-                setState(() {
-                  _showBalance = !_showBalance;
-                });
-              },
-              activeColor: Colors.white),
+            value: _showBalance,
+            onChanged: (val) {
+              setState(() {
+                _showBalance = !_showBalance;
+              });
+            },
+            activeColor: Colors.white,
+          ),
         ],
       ),
       backgroundColor: Colors.black87,
@@ -184,10 +189,11 @@ class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
                     );
                   } else {
                     return const Center(
-                        child: Text(
-                      'Failed to load beneficiaries',
-                      style: TextStyle(color: Colors.white),
-                    ));
+                      child: Text(
+                        'Failed to load beneficiaries',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    );
                   }
                 },
               ),
@@ -220,10 +226,12 @@ class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
     );
   }
 
+  /// Logs out the current user and clears the beneficiaries.
   void _logOut(BuildContext context) {
     context.read<BeneficiaryCubit>().clearBeneficiaries();
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (Route<dynamic> route) => false);
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      (Route<dynamic> route) => false,
+    );
   }
 }
